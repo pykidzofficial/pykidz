@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* -------------------------------
+   THEME TOKENS
+-------------------------------- */
+@theme {
+  /* Colors */
+  --color-primary: #FFD93D;
+  --color-secondary: #4F8DF7;
+  --color-surface: #FFFDF5;
+  --color-accent1: #8FE6A2;
+  --color-accent2: #FF9770;
+  --color-primarytext:#FFFDF5;
+  --color-secondarytext:#1E1E1E;
+
+  /* Fonts */
+  --font-heading: "Fredoka", cursive;
+  --font-body: "Nunito", sans-serif;
+  --font-code: "Fira Code", monospace;
+
+  /* Font sizes */
+  --text-h1: 44px;
+  --text-h2: 36px;
+  --text-h3: 28px;
+  --text-h4: 22px;
+  --text-body: 18px;
+  --text-body-sm: 16px;
+  --text-caption: 14px;
+  --text-code: 16px;
+  --text-code-sm: 15px;
+}
+/* -------------------------------
+   BASE STYLES
+-------------------------------- */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-primarytext);
+  background-color: var(--color-surface);
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: 700;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 700;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  font-weight: 600;
+}
+
+p {
+  font-size: var(--text-body);
+  color: var(--color-primarytext);
+}
+
+/* Utility classes */
+.nav-text {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.btn-text {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.caption {
+  font-size: var(--text-caption);
+  color: var(--color-secondarytext);
+}
+
+.code-inline {
+  font-family: var(--font-code);
+  font-size: var(--text-code);
+  background-color: #00000010;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.code-block {
+  font-family: var(--font-code);
+  font-size: var(--text-code-sm);
+  background-color: #0000000d;
+  padding: 16px;
+  border-radius: 12px;
+}
