@@ -1,5 +1,5 @@
 import React from "react";
-import Bruno from "../assets/bruno.png";
+import Bruno from "../assets/Bruno.png";
 import Luno from "../assets/luno.png";
 import Mappo from "../assets/mappo.png";
 
