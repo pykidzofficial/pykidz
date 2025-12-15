@@ -38,12 +38,11 @@ const Badges = () => {
               src={badge}
               alt="Creation Badge"
               className="
-                w-36 h-36                 /* mobile */
-                sm:w-36 sm:h-36           /* small tablets */
+                w-42 h-42                 /* mobile */
+                sm:w-42 sm:h-42           /* small tablets */
                 md:w-56 md:h-56           /* tablets */
                 lg:w-72 lg:h-72           /* desktop */
                 xl:w-80 xl:h-80           /* large screens */
-
                 object-cover
                 rounded-full
                 border-4 border-yellow-400
