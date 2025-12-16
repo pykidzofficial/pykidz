@@ -1,16 +1,18 @@
 import React from "react";
-import mapImg from "../assets/pyland-map.png";
-import { islands } from "../data/islands";
+import { useNavigate } from "react-router-dom";
+
 import Nav from "../components/Nav";
+import mapImg from "../assets/pyland-map.png";
 import heroImg from "../assets/pyhome.png";
+import { islands } from "../data/islands";
 
 const Adventures = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat relative"
-      style={{
-        backgroundImage: `url(${heroImg})`,
-      }}
+      style={{ backgroundImage: `url(${heroImg})` }}
     >
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/70" />
@@ -18,12 +20,12 @@ const Adventures = () => {
       {/* Navigation */}
       <Nav activePage="Adventures" />
 
-      {/* Content */}
+      {/* Page Content */}
       <div className="relative z-10 pt-28 flex items-center justify-center px-4 pb-20">
-
         {/* Map Container */}
         <div
           className="relative w-full max-w-6xl overflow-hidden
+                     rounded-xl
                      shadow-[0_30px_80px_rgba(0,0,0,0.9)]"
         >
           {/* Map Image */}
@@ -41,8 +43,9 @@ const Adventures = () => {
                 absolute flex items-center justify-center
                 rounded-full font-bold
                 transition-all duration-300
+                border-4 border-white
 
-                /* 🔹 Responsive Sizes */
+                /* Responsive sizes */
                 w-7 h-7 text-xs
                 md:w-9 md:h-9 md:text-sm
                 lg:w-11 lg:h-11 lg:text-base
@@ -60,7 +63,7 @@ const Adventures = () => {
               }}
               onClick={() => {
                 if (island.unlocked) {
-                  alert(`Go to ${island.name}`);
+                  navigate(`/level/${island.id}`);
                 }
               }}
             >

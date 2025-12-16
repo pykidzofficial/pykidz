@@ -10,13 +10,16 @@
   --color-surface: #FFFDF5;
   --color-accent1: #8FE6A2;
   --color-accent2: #FF9770;
-  --color-primarytext:#FFFDF5;
-  --color-secondarytext:#1E1E1E;
+  --color-primarytext: #FFFDF5;
+  --color-secondarytext: #1E1E1E;
 
   /* Fonts */
   --font-heading: "Fredoka", cursive;
   --font-body: "Nunito", sans-serif;
   --font-code: "Fira Code", monospace;
+
+  /* 🔹 ADDED FONTS */
+  --font-display: "Baloo 2", cursive;
 
   /* Font sizes */
   --text-h1: 44px;
@@ -28,7 +31,23 @@
   --text-caption: 14px;
   --text-code: 16px;
   --text-code-sm: 15px;
+
+  /* 🔹 ADDED SIZES (Level Page Specific) */
+  --text-level: 24px;
+  --text-display-xl: 72px;
+  --text-guardian: 24px;
+  --text-paragraph: 14px;
+  --text-button: 18px;
+
+  /* 🔹 LINE HEIGHTS */
+  --lh-tight: 22px;
+  --lh-normal: 50px;
+
+  /* 🔹 LETTER SPACING */
+  --ls-normal: 0;
+  --ls-wide: 5%;
 }
+
 /* -------------------------------
    BASE STYLES
 -------------------------------- */
@@ -68,7 +87,51 @@ p {
   color: var(--color-primarytext);
 }
 
-/* Utility classes */
+/* -------------------------------
+   LEVEL PAGE UTILITIES (NEW)
+-------------------------------- */
+.level-text {
+  font-family: var(--font-body);
+  font-size: var(--text-level);
+  font-weight: 600;
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-wide);
+}
+
+.level-title {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  font-weight: 700;
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-wide);
+}
+
+.guardian-text {
+  font-family: var(--font-body);
+  font-size: var(--text-guardian);
+  font-style: italic;
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-wide);
+}
+
+.paragraph-text {
+  font-family: var(--font-body);
+  font-size: var(--text-paragraph);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-normal);
+}
+
+.button-text {
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0;
+}
+
+/* -------------------------------
+   EXISTING UTILITIES
+-------------------------------- */
 .nav-text {
   font-size: 17px;
   font-weight: 600;

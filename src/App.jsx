@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Adventures from "./pages/Adventures";
 import Signup from "./pages/Signup"; // ✅ ADD THIS
 import Login from "./pages/Login";
+import Pycaster from "./pages/Pycaster";
+import StartingPage from "./pages/StartingPage";
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
 
         {/* Adventures (Map Page) */}
         <Route path="/adventures" element={<Adventures />} />
+        <Route path="/pycaster" element={<Pycaster />} />
+        <Route path="/level/:levelId" element={<StartingPage />} />
         <Route path="/login" element={<Login />} />
         {/* Signup */}
         <Route path="/signup" element={<Signup />} /> {/* ✅ ADD THIS */}

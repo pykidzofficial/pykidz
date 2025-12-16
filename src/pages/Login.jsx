@@ -54,7 +54,7 @@ const Login = () => {
 
           {/* CTA */}
           <button
-            type="submit"
+            type="submit" onClick={() => navigate("/adventures")}
             className="w-full mt-4 py-3 rounded-full text-white font-semibold
                        bg-gradient-to-r from-green-400 to-green-600
                        hover:scale-105 transition shadow-lg"
