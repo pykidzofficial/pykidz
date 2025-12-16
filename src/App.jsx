@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Adventures from "./pages/Adventures";
-import Signup from "./pages/Signup"; // ✅ ADD THIS
+import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Pycaster from "./pages/Pycaster";
 import StartingPage from "./pages/StartingPage";
+import Story from "./pages/Story";
 
 const App = () => {
   return (
@@ -15,13 +16,18 @@ const App = () => {
         {/* Home */}
         <Route path="/" element={<Home />} />
 
-        {/* Adventures (Map Page) */}
+        {/* Map */}
         <Route path="/adventures" element={<Adventures />} />
-        <Route path="/pycaster" element={<Pycaster />} />
+
+        {/* Level Flow */}
         <Route path="/level/:levelId" element={<StartingPage />} />
+        <Route path="/story/:levelId" element={<Story />} />
+
+        <Route path="/pycaster/:levelId" element={<Pycaster />} />
+
+        {/* Auth */}
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        {/* Signup */}
-        <Route path="/signup" element={<Signup />} /> {/* ✅ ADD THIS */}
       </Routes>
     </Router>
   );
