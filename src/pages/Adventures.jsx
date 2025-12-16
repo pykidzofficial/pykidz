@@ -3,6 +3,7 @@ import mapImg from "../assets/pyland-map.png";
 import { islands } from "../data/islands";
 import Nav from "../components/Nav";
 import heroImg from "../assets/pyhome.png";
+
 const Adventures = () => {
   return (
     <div
@@ -11,7 +12,7 @@ const Adventures = () => {
         backgroundImage: `url(${heroImg})`,
       }}
     >
-      {/* Dark Overlay for readability */}
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Navigation */}
@@ -36,8 +37,16 @@ const Adventures = () => {
           {islands.map((island) => (
             <button
               key={island.id}
-              className={`absolute flex items-center justify-center
-                rounded-full font-bold transition-all duration-300
+              className={`
+                absolute flex items-center justify-center
+                rounded-full font-bold
+                transition-all duration-300
+
+                /* 🔹 Responsive Sizes */
+                w-7 h-7 text-xs
+                md:w-9 md:h-9 md:text-sm
+                lg:w-11 lg:h-11 lg:text-base
+
                 ${
                   island.unlocked
                     ? "bg-yellow-400 text-black hover:scale-110 shadow-lg"
@@ -47,8 +56,6 @@ const Adventures = () => {
               style={{
                 left: `${island.x}%`,
                 top: `${island.y}%`,
-                width: "44px",
-                height: "44px",
                 transform: "translate(-50%, -50%)",
               }}
               onClick={() => {
