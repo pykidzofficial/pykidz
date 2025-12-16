@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import logo from "../assets/pylogo.png";
 import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({ activePage }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const navItems = [
+    { label: "Home", path: "/" },
+    { label: "Characters", path: "/characters" },
+    { label: "Adventures", path: "/adventures" },
+    { label: "Learn", path: "/learn" },
+    { label: "FAQ", path: "/faq" },
+  ];
 
   return (
     <>
@@ -12,28 +22,38 @@ const Nav = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
 
           {/* Logo */}
-          <img src={logo} alt="PyKidz Logo" className="h-10 w-auto" />
+          <img
+            src={logo}
+            alt="PyKidz Logo"
+            className="h-10 cursor-pointer"
+            onClick={() => navigate("/")}
+          />
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8 nav-text text-primarytext">
-            {["Home", "Characters", "Adventures", "Learn", "FAQ"].map(
-              (item) => (
-                <li
-                  key={item}
-                  className="cursor-pointer hover:text-primary transition"
-                >
-                  {item}
-                </li>
-              )
-            )}
+          <ul className="hidden md:flex items-center gap-8 nav-text">
+            {navItems.map((item) => (
+              <li
+                key={item.label}
+                onClick={() => navigate(item.path)}
+                className={`cursor-pointer transition
+                  ${
+                    activePage === item.label
+                      ? "text-primary font-bold"
+                      : "text-primarytext hover:text-primary"
+                  }
+                `}
+              >
+                {item.label}
+              </li>
+            ))}
           </ul>
 
-          {/* CTA (Desktop) */}
+          {/* CTA */}
           <button className="hidden md:block bg-primary text-secondarytext px-6 py-2 rounded-full btn-text hover:scale-105 transition">
             Start Learning
           </button>
 
-          {/* Hamburger (Mobile) */}
+          {/* Mobile Menu */}
           <button
             className="md:hidden text-primarytext"
             onClick={() => setIsOpen(true)}
@@ -43,7 +63,7 @@ const Nav = () => {
         </div>
       </nav>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/70 z-40"
@@ -57,7 +77,6 @@ const Nav = () => {
         transform transition-transform duration-300
         ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        {/* Close Button */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <img src={logo} alt="PyKidz Logo" className="h-8" />
           <button onClick={() => setIsOpen(false)}>
@@ -65,24 +84,29 @@ const Nav = () => {
           </button>
         </div>
 
-        {/* Sidebar Links */}
         <ul className="flex flex-col gap-6 px-6 py-10 text-white text-lg">
-          {["Home", "Characters", "Adventures", "Learn", "FAQ"].map(
-            (item) => (
-              <li
-                key={item}
-                className="cursor-pointer hover:text-primary transition"
-                onClick={() => setIsOpen(false)}
-              >
-                {item}
-              </li>
-            )
-          )}
+          {navItems.map((item) => (
+            <li
+              key={item.label}
+              onClick={() => {
+                navigate(item.path);
+                setIsOpen(false);
+              }}
+              className={`cursor-pointer transition
+                ${
+                  activePage === item.label
+                    ? "text-primary font-bold"
+                    : "hover:text-primary"
+                }
+              `}
+            >
+              {item.label}
+            </li>
+          ))}
         </ul>
 
-        {/* Sidebar CTA */}
         <div className="px-6">
-          <button className="w-full bg-primary text-secondarytext py-3 rounded-full btn-text hover:scale-105 transition">
+          <button className="w-full bg-primary text-secondarytext py-3 rounded-full btn-text">
             Start Learning
           </button>
         </div>
