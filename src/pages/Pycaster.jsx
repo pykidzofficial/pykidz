@@ -74,7 +74,7 @@ const PyCaster = () => {
       </div>
 
       {/* 🧙‍♂️ FIXED MASCOT — BOTTOM LEFT */}
-      <div className="fixed bottom-6 left-6 z-30 flex items-end gap-2">
+      <div className="fixed bottom-0.5 left-6 z-30 flex items-end gap-2">
 
         {/* Mascot */}
         <img
