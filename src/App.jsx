@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Pycaster from "./pages/Pycaster";
 import StartingPage from "./pages/StartingPage";
 import Story from "./pages/Story";
+import Reward from "./pages/Reward";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/story/:levelId" element={<Story />} />
 
         <Route path="/pycaster/:levelId" element={<Pycaster />} />
+        <Route path="/reward" element={<Reward />} />
 
         {/* Auth */}
         <Route path="/signup" element={<Signup />} />
