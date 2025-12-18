@@ -5,7 +5,6 @@ import { levels } from "../data/levels";
 const StartingPage = () => {
   const { levelId } = useParams();
   const navigate = useNavigate();
-
   const levelData = levels[levelId];
 
   if (!levelData) {
@@ -27,51 +26,35 @@ const StartingPage = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-12 pt-28 text-white">
 
-        {/* Level */}
-        <p
-          className="text-[24px] font-semibold font-[var(--font-body)]
-                     leading-[50px] tracking-[0.05em]"
-        >
+        {/* LEVEL */}
+        <p className="level-text">
           Level {levelData.level}
         </p>
 
-        {/* Title */}
-        <h1
-          className="mt-2 text-[72px] font-bold font-[var(--font-heading)]
-                     leading-[50px] tracking-[0.05em]
-                     text-[var(--color-primary)]"
-        >
+        {/* TITLE */}
+        <h1 className="level-title text-[var(--color-primary)] mt-2">
           {levelData.title}
         </h1>
 
-        {/* Guardian */}
-        <p
-          className="mt-4 text-[24px] italic font-[var(--font-body)]
-                     leading-[50px] tracking-[0.05em]"
-        >
+        {/* GUARDIAN */}
+        <p className="guardian-text mt-4">
           Guardian: {levelData.guardian}
         </p>
 
-        {/* Stats */}
-        <div
-          className="flex gap-10 mt-6
-                     text-[18px] font-medium
-                     leading-[50px] tracking-[0.05em]"
-        >
+        {/* STATS */}
+        <div className="flex gap-10 mt-6 text-[18px] font-medium font-nunito">
           <span>⭐ {levelData.stars}</span>
           <span>💰 {levelData.coins}</span>
           <span>📖 {levelData.chapter}</span>
         </div>
 
-        {/* Buttons */}
+        {/* BUTTONS */}
         <div className="flex gap-6 mt-10">
           <button
             onClick={() => navigate(`/story/${levelId}`)}
             className="bg-[var(--color-primary)] text-black
                        px-[18px] py-[9px] rounded-full
-                       text-[18px] font-bold
-                       leading-[22px]
-                       hover:scale-105 transition"
+                       button-text hover:scale-105 transition"
           >
             Start Learning
           </button>
@@ -80,8 +63,7 @@ const StartingPage = () => {
             className="border border-[var(--color-primary)]
                        text-[var(--color-primary)]
                        px-[18px] py-[9px] rounded-full
-                       text-[18px] font-bold
-                       leading-[22px]
+                       button-text
                        hover:bg-[var(--color-primary)]
                        hover:text-black transition"
           >
@@ -89,13 +71,8 @@ const StartingPage = () => {
           </button>
         </div>
 
-        {/* Description */}
-        <p
-          className="max-w-3xl mt-8
-                     text-[14px] font-normal
-                     leading-[22px] tracking-[0]
-                     text-white/90"
-        >
+        {/* DESCRIPTION */}
+        <p className="paragraph-text max-w-3xl mt-8 text-white/90">
           {levelData.description}
         </p>
       </div>

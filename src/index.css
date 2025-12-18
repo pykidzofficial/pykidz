@@ -88,7 +88,7 @@ p {
 }
 
 /* -------------------------------
-   LEVEL PAGE UTILITIES (NEW)
+   LEVEL PAGE UTILITIES
 -------------------------------- */
 .level-text {
   font-family: var(--font-body);
@@ -161,4 +161,22 @@ p {
   background-color: #0000000d;
   padding: 16px;
   border-radius: 12px;
+}
+
+/* --------------------------------
+   STORY MODE – CINEMATIC EFFECTS
+---------------------------------- */
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate(-2%, -2%);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 10s ease-in-out forwards;
+  will-change: transform;
 }
