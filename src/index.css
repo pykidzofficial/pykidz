@@ -180,3 +180,111 @@ p {
   animation: kenburns 10s ease-in-out forwards;
   will-change: transform;
 }
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0px rgba(255, 215, 0, 0.6); }
+  50% { box-shadow: 0 0 18px rgba(255, 215, 0, 1); }
+  100% { box-shadow: 0 0 0px rgba(255, 215, 0, 0.6); }
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-glowPulse {
+  animation: glowPulse 2s infinite;
+}
+
+.animate-bounceSoft {
+  animation: bounceSoft 1.8s infinite;
+}
+/* -------------------------------
+   STAR ANIMATIONS
+-------------------------------- */
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes starGlow {
+  0% { filter: drop-shadow(0 0 4px gold); }
+  50% { filter: drop-shadow(0 0 16px gold); }
+  100% { filter: drop-shadow(0 0 4px gold); }
+}
+
+.animate-starPulse {
+  animation: starPulse 1.8s infinite;
+}
+
+.animate-starGlow {
+  animation: starGlow 2s infinite;
+}
+
+/* -------------------------------
+   CONFETTI
+-------------------------------- */
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 16px;
+  opacity: 0.9;
+  animation: confettiFall 3.5s linear infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(120vh) rotate(360deg);
+  }
+}
+
+/* -------------------------------
+   CARD + TEXT MOTION
+-------------------------------- */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-floatCard {
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pop {
+  animation: pop 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes buttonBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-buttonBounce {
+  animation: buttonBounce 1.6s infinite;
+}

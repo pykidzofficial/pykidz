@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { levels } from "../data/levels";
+import kidStoryVideo from "../assets/story/level1/videos/kidstory.mp4";
 
 const AUTO_PLAY_DELAY = 3500; // 3.5 seconds
 
@@ -14,6 +15,7 @@ const Story = () => {
     window.innerWidth > window.innerHeight
   );
   const [isPaused, setIsPaused] = useState(false);
+  const [storyMode, setStoryMode] = useState(null); // null | images | video
 
   const touchStartX = useRef(0);
   const autoPlayRef = useRef(null);
@@ -28,7 +30,6 @@ const Story = () => {
 
     window.addEventListener("resize", handleResize);
 
-    // Try to lock landscape (best effort)
     if (screen.orientation?.lock) {
       screen.orientation.lock("landscape").catch(() => {});
     }
@@ -48,9 +49,10 @@ const Story = () => {
   const isLastSlide = currentSlide === totalSlides - 1;
 
   /* ----------------------------------
-     AUTO PLAY
+     AUTO PLAY (IMAGES ONLY)
   ---------------------------------- */
   useEffect(() => {
+    if (storyMode !== "images") return;
     if (isPaused || isLastSlide) return;
 
     autoPlayRef.current = setTimeout(() => {
@@ -58,7 +60,7 @@ const Story = () => {
     }, AUTO_PLAY_DELAY);
 
     return () => clearTimeout(autoPlayRef.current);
-  }, [currentSlide, isPaused, isLastSlide]);
+  }, [currentSlide, isPaused, isLastSlide, storyMode]);
 
   /* ----------------------------------
      SLIDE CONTROLS
@@ -100,9 +102,7 @@ const Story = () => {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-center px-6">
         <div className="text-6xl mb-6">📱↻</div>
-        <h2 className="text-2xl font-bold mb-2">
-          Rotate Your Phone
-        </h2>
+        <h2 className="text-2xl font-bold mb-2">Rotate Your Phone</h2>
         <p className="text-white/80 max-w-xs">
           This story is best experienced in landscape mode.
         </p>
@@ -111,7 +111,57 @@ const Story = () => {
   }
 
   /* ----------------------------------
-     STORY VIEW
+     STORY MODE SELECTION
+  ---------------------------------- */
+  if (!storyMode) {
+    return (
+      <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center text-center px-6">
+        <h1 className="text-3xl font-bold mb-4">
+          How do you want to experience the story?
+        </h1>
+
+        <p className="text-white/70 mb-8 max-w-md">
+          Choose between an interactive image story or a cinematic video.
+        </p>
+
+        <div className="flex gap-6">
+          <button
+            onClick={() => setStoryMode("images")}
+            className="px-8 py-4 rounded-xl bg-[var(--color-primary)] text-black font-semibold hover:scale-105 transition"
+          >
+            🖼️ View Images
+          </button>
+
+          <button
+            onClick={() => setStoryMode("video")}
+            className="px-8 py-4 rounded-xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition"
+          >
+            🎬 Watch Video
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* ----------------------------------
+     VIDEO MODE
+  ---------------------------------- */
+  if (storyMode === "video") {
+    return (
+      <div className="fixed inset-0 bg-black">
+        <video
+          src={kidStoryVideo}
+          autoPlay
+          controls
+          className="w-full h-full object-cover"
+          onEnded={() => navigate(`/pycaster/${levelId}`)}
+        />
+      </div>
+    );
+  }
+
+  /* ----------------------------------
+     IMAGE STORY VIEW
   ---------------------------------- */
   return (
     <div
@@ -121,7 +171,7 @@ const Story = () => {
       onTouchEnd={handleTouchEnd}
       onClick={() => setIsPaused(true)}
     >
-      {/* STORY IMAGE WITH PARALLAX + SLOW ZOOM */}
+      {/* STORY IMAGE */}
       <img
         key={currentSlide}
         src={levelData.storySlides[currentSlide]}
@@ -140,8 +190,6 @@ const Story = () => {
 
       {/* NAVIGATION UI */}
       <div className="relative z-10 w-full h-full flex items-center justify-between px-6">
-
-        {/* PREVIOUS */}
         <button
           onClick={prevSlide}
           disabled={currentSlide === 0}
@@ -152,14 +200,14 @@ const Story = () => {
           ◀
         </button>
 
-        {/* SLIDE COUNTER */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2
           bg-black/60 backdrop-blur-md rounded-full
-          px-6 py-2 text-sm">
+          px-6 py-2 text-sm"
+        >
           {currentSlide + 1} / {totalSlides}
         </div>
 
-        {/* NEXT */}
         <button
           onClick={nextSlide}
           disabled={isLastSlide}
@@ -174,8 +222,7 @@ const Story = () => {
       {/* SKIP / GO BUTTON */}
       <button
         onClick={() => navigate(`/pycaster/${levelId}`)}
-        className={`absolute top-6 right-6 z-20 px-6 py-2 rounded-full text-sm
-        transition
+        className={`absolute top-6 right-6 z-20 px-6 py-2 rounded-full text-sm transition
         ${
           isLastSlide
             ? "bg-[var(--color-primary)] text-black hover:scale-105"
