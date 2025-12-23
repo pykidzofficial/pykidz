@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { levels } from "../data/levels";
 import kidStoryVideo from "../assets/story/level1/videos/kidstory.mp4";
 
-const AUTO_PLAY_DELAY = 3500; // 3.5 seconds
+const AUTO_PLAY_DELAY = 3500;
 
 const Story = () => {
   const { levelId } = useParams();
@@ -16,6 +16,7 @@ const Story = () => {
   );
   const [isPaused, setIsPaused] = useState(false);
   const [storyMode, setStoryMode] = useState(null); // null | images | video
+  const [storyCompleted, setStoryCompleted] = useState(false); // ⭐ NEW
 
   const touchStartX = useRef(0);
   const autoPlayRef = useRef(null);
@@ -30,12 +31,21 @@ const Story = () => {
 
     window.addEventListener("resize", handleResize);
 
-    if (screen.orientation?.lock) {
+    if (screen.orientation?.lock && !storyCompleted) {
       screen.orientation.lock("landscape").catch(() => {});
     }
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [storyCompleted]);
+
+  /* ----------------------------------
+     AUTO NAVIGATE AFTER PORTRAIT
+  ---------------------------------- */
+  useEffect(() => {
+    if (storyCompleted && !isLandscape) {
+      navigate(`/pycaster/${levelId}`);
+    }
+  }, [storyCompleted, isLandscape, navigate, levelId]);
 
   if (!levelData || !levelData.storySlides) {
     return (
@@ -67,8 +77,10 @@ const Story = () => {
   ---------------------------------- */
   const nextSlide = () => {
     setIsPaused(true);
-    if (currentSlide < totalSlides - 1) {
+    if (!isLastSlide) {
       setCurrentSlide((prev) => prev + 1);
+    } else {
+      setStoryCompleted(true);
     }
   };
 
@@ -96,9 +108,26 @@ const Story = () => {
   };
 
   /* ----------------------------------
-     PORTRAIT BLOCK
+     PORTRAIT RECOMMENDATION (AFTER STORY)
   ---------------------------------- */
-  if (!isLandscape) {
+  if (storyCompleted && isLandscape) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-center px-6">
+        <div className="text-7xl mb-6 animate-bounce">📱↻</div>
+        <h2 className="text-3xl font-bold mb-3 text-yellow-400">
+          Rotate to Portrait
+        </h2>
+        <p className="text-white/80 max-w-sm">
+          The adventure continues in portrait mode.
+        </p>
+      </div>
+    );
+  }
+
+  /* ----------------------------------
+     LANDSCAPE BLOCK (BEFORE STORY)
+  ---------------------------------- */
+  if (!isLandscape && !storyCompleted) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-center px-6">
         <div className="text-6xl mb-6">📱↻</div>
@@ -154,7 +183,7 @@ const Story = () => {
           autoPlay
           controls
           className="w-full h-full object-cover"
-          onEnded={() => navigate(`/pycaster/${levelId}`)}
+          onEnded={() => setStoryCompleted(true)}
         />
       </div>
     );
@@ -171,66 +200,31 @@ const Story = () => {
       onTouchEnd={handleTouchEnd}
       onClick={() => setIsPaused(true)}
     >
-      {/* STORY IMAGE */}
       <img
         key={currentSlide}
         src={levelData.storySlides[currentSlide]}
         alt={`Story Slide ${currentSlide + 1}`}
-        className="
-          absolute inset-0
-          w-screen h-screen
-          object-cover object-center
-          select-none
-          animate-kenburns
-        "
+        className="absolute inset-0 w-screen h-screen object-cover select-none animate-kenburns"
       />
 
-      {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* NAVIGATION UI */}
       <div className="relative z-10 w-full h-full flex items-center justify-between px-6">
         <button
           onClick={prevSlide}
           disabled={currentSlide === 0}
-          className={`w-14 h-14 rounded-full bg-black/60 backdrop-blur-md
-          flex items-center justify-center text-2xl
-          ${currentSlide === 0 ? "opacity-30 cursor-not-allowed" : ""}`}
+          className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center text-2xl disabled:opacity-30"
         >
           ◀
         </button>
 
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2
-          bg-black/60 backdrop-blur-md rounded-full
-          px-6 py-2 text-sm"
-        >
-          {currentSlide + 1} / {totalSlides}
-        </div>
-
         <button
           onClick={nextSlide}
-          disabled={isLastSlide}
-          className={`w-14 h-14 rounded-full bg-black/60 backdrop-blur-md
-          flex items-center justify-center text-2xl
-          ${isLastSlide ? "opacity-30 cursor-not-allowed" : ""}`}
+          className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center text-2xl"
         >
           ▶
         </button>
       </div>
-
-      {/* SKIP / GO BUTTON */}
-      <button
-        onClick={() => navigate(`/pycaster/${levelId}`)}
-        className={`absolute top-6 right-6 z-20 px-6 py-2 rounded-full text-sm transition
-        ${
-          isLastSlide
-            ? "bg-[var(--color-primary)] text-black hover:scale-105"
-            : "bg-black/60 text-white hover:bg-[var(--color-primary)] hover:text-black"
-        }`}
-      >
-        {isLastSlide ? "Go to Pycaster" : "Skip Story"}
-      </button>
     </div>
   );
 };
